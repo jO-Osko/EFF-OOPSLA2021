@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  ocaml_service:
+    container_name: ocaml_server
+    build:
+      context: .
+      dockerfile: Dockerfile
+
