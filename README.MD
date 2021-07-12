@@ -4,11 +4,11 @@
 
 ### Intro
 
-This artifact is prepared as a docker image. The docker image contains the `Eff` compiler built from source along with additional external benchmark files and working version of multicore OCaml compiler used for running benchmarks. The dockerfile was tested on MacOS (version v19.03.13-beta2) and Windows.
+This artifact is prepared as a docker image. The docker image contains the `Eff` compiler built from source along with additional external benchmark files and working version of multicore OCaml compiler used for running benchmarks. The dockerfile was tested on MacOS (version v19.03.13-beta2), Ubuntu (20.04.2 LTS), and Windows.
 
 ### Instructions
 
-- Install docker for your [operating system](https://docs.docker.com/engine/install/), any recent enough version will do.
+- Install docker for your [operating system](https://docs.docker.com/engine/install/), any recent enough version will do. This artifact has been tested with Docker version 20.10.2, build 20.10.2-0ubuntu1~20.04.2.
 - Before any operation, make sure that `docker-deamon` or docker service is running.
 - Obtain Docker image. This can be done in two ways:
 
@@ -64,7 +64,7 @@ Unless otherwise stated, all commands are run in docker. This is also the same f
   This runs all benchmarks and regenerates table files located in `/eff/misc/code-generation-benchmarks/generate-graphs/tables/`. Filename consists of benchmark name (`count`, `interpreter-state`, ...) and benchmark backend (`generated` for generated OCaml code, `native`, `capabilities`, ...).
 
   Each file has a header with user-readable information and space-separated list of values: input parameter and execution time ratio with respect to native OCaml version.
-  
+
   Use `nano` to view benchmark results: `nano misc/code-generation-benchmarks/generate-graphs/tables/loop_benchmarks-generated.table`.
 
 - Run benchmarks and output benchmark data in human-readable format:
