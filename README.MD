@@ -4,7 +4,7 @@
 
 ### Intro
 
-This artifact is prepared as a docker image. The docker image contains the `Eff` compiler built from source along with additional external benchmark files and working version of multicore OCaml compiler used for running benchmarks. The dockerfile was tested on MacOS (version v19.03.13-beta2), Ubuntu (20.04.2 LTS), and Windows.
+This artifact is prepared as a docker image. The docker image contains the `Eff` compiler built from source along with additional external benchmark files and working version of multicore OCaml compiler used for running benchmarks. The dockerfile was tested on MacOS (version v19.03.13-beta2 and v20.10.7), Ubuntu (20.04.2 LTS), and Windows (20.10.6, build 370c289).
 
 ### Instructions
 
