@@ -102,3 +102,10 @@ Claims not/partially supported by the artifact:
 ### Remarks
 
 Running `make test` with the multicore version of OCaml compiler fails due to missing `ocamlformat` library. See section `Extend and change the compiler` on how to switch to standard OCaml.
+
+### Artifact links
+
+- Zenodo code release: [![DOI](https://zenodo.org/badge/157909545.svg)](https://zenodo.org/badge/latestdoi/157909545).
+- Dockerhub [Dockerfile](https://hub.docker.com/layers/157697698/j00sko/eff-oopsla-artifact/oopsla2021/images/sha256-9f049a25ba572a821d5435a62259e0b3329d628ae665d9755885966849593c76), sha: `9f049a25ba572a821d5435a62259e0b3329d628ae665d9755885966849593c76`.
+- Artifact information and instructions: [page](https://github.com/jO-Osko/EFF-OOPSLA2021/releases/tag/OOPSLA2021-INSTRUCTIONS).
+- Dockerfile on zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5092128.svg)](https://doi.org/10.5281/zenodo.5092128).
