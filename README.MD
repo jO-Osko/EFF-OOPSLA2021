@@ -4,7 +4,7 @@
 
 ### Intro
 
-This artifact is prepared as a docker image. The docker image contains the `Eff` compiler built from source along with additional external benchmark files and working version of multicore ocaml compiler used for running benchmarks. The dockerfile was tested on MacOS (version v19.03.13-beta2) and Windows.
+This artifact is prepared as a docker image. The docker image contains the `Eff` compiler built from source along with additional external benchmark files and working version of multicore OCaml compiler used for running benchmarks. The dockerfile was tested on MacOS (version v19.03.13-beta2) and Windows.
 
 ### Instructions
 
@@ -52,6 +52,8 @@ Any commands can also be executed directly in source code repo available at [htt
 
 Execute command `docker run -it j00sko/eff-oopsla-artifact:oopsla2021 bash`, to get access to docker.
 
+Dockerfile is minimal and `nano` is the only available editor. You can install an editor of your choice `apt-get install vim`, but be aware, that any changes made to file system will be undone once you exit the container (including installing a new editor).
+
 ### Available commands
 
 Unless otherwise stated, all commands are run in docker. This is also the same format for commands if you were to use repository locally.
@@ -59,14 +61,16 @@ Unless otherwise stated, all commands are run in docker. This is also the same f
 - Generate data for benchmark results presented in paper:
 `make graphs`.
 
-  This runs all benchmarks and regenerates table files located in `/eff/misc/code-generation-benchmarks/generate-graphs/tables/`. Filename consists of benchmark name (`count`, `interpreter-state`, ...) and benchmark backend (`generated` for generated ocaml code, `native`, `capabilities`, ...).
+  This runs all benchmarks and regenerates table files located in `/eff/misc/code-generation-benchmarks/generate-graphs/tables/`. Filename consists of benchmark name (`count`, `interpreter-state`, ...) and benchmark backend (`generated` for generated OCaml code, `native`, `capabilities`, ...).
 
   Each file has a header with user-readable information and space-separated list of values: input parameter and execution time ratio with respect to native OCaml version.
+  
+  Use `nano` to view benchmark results: `nano misc/code-generation-benchmarks/generate-graphs/tables/loop_benchmarks-generated.table`.
 
 - Run benchmarks and output benchmark data in human-readable format:
 `make benchmark`.
 
-  This runs the same benchmarks as presented in paper but outputs human readable `bechamel` results.
+  This runs the same benchmarks as presented in paper but outputs human readable `bechamel` results. The command outputs a (usually large) `diff` between existing benchmarks present in the filesystem and results of current run and inevitably ends with an error, since `diff` reports a change. The output of the full result is saved in file `misc/code-generation-benchmarks/display-results/benchmark.expected` and can be visualized using `cat misc/code-generation-benchmarks/display-results/benchmark.expected`.
 
   Specific benchmarks can be excluded and tried on different parameters by modifying file `misc/code-generation-benchmarks/benchmark-suite/benchmark_config.ml`. Multicore OCaml specific config is available in `misc/code-generation-benchmarks/benchmark-suite/config.multicore.ml`.
 
@@ -97,4 +101,4 @@ Claims not/partially supported by the artifact:
 
 ### Remarks
 
-Running `make test` with multicore version of compiler fails due to missing `ocamlformat` library. See section `Extend and change the compiler` on how to switch to standard OCaml.
+Running `make test` with the multicore version of OCaml compiler fails due to missing `ocamlformat` library. See section `Extend and change the compiler` on how to switch to standard OCaml.
