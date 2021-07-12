@@ -15,7 +15,7 @@ This artifact is prepared as docker image. The docker image contains `eff` compi
   - Use prebuilt image available on Dockerhub (faster, recommended):
     - Pull image using `docker pull j00sko/eff-oopsla-artifact:oopsla2021`.
   - Build image locally(slower).
-    - The repository contains the same `Dockerfile` used to build image on dockerhub.  
+    - The repository contains the same `Dockerfile` used to build image on dockerhub.
     - Run `docker build -t j00sko/eff-oopsla-artifact:oopsla2021 .`. Build can take up to 30 minutes depending on your internet connection and computer power. Warnings from opam that "running as root is not recommended" are expected and should be ignored.
 
 - Test successful build by running `docker run j00sko/eff-oopsla-artifact:oopsla2021 ./eff.exe examples/random.eff`. This runs simple example and should produce:
@@ -65,7 +65,7 @@ Unless otherwise states, all commands are run in docker. This is also the same f
 
 - Run benchmarks and output benchmark data in human readable format
 `make benchmark`.
-  
+
   This runs the same benchmarks as presented in paper but outputs human readable `bechamel` results.
 
   Specific benchmarks can be excluded and tried on different parameters by modifying file `misc/code-generation-benchmarks/benchmark-suite/benchmark_config.ml`. Multicore OCaml specific config is available in `misc/code-generation-benchmarks/benchmark-suite/config.multicore.ml`.
@@ -75,12 +75,12 @@ Unless otherwise states, all commands are run in docker. This is also the same f
 
   Command `./eff.exe --no-stdlib --compile-plain-ocaml misc/code-generation-benchmarks/benchmark-suite/loop.eff > out.ml` compiles all loop benchmarks presented in paper.
 
-  Resulting file has depends on `ocamlHeader.ml` located in `ocamlHeader/ocamlHeader.ml` and to use it, you have to compile them together `ocaml ocamlHeader/ocamlHeader.ml out.ml` or just manually copy contents from the header to generated file and use it as is. 
+  Resulting file has depends on `ocamlHeader.ml` located in `ocamlHeader/ocamlHeader.ml` and to use it, you have to compile them together `ocaml ocamlHeader/ocamlHeader.ml out.ml` or just manually copy contents from the header to generated file and use it as is.
 
 - Extend and change the compiler.
-  
+
   Full compiler source code is available and users can make their own modifications and test the compiler. We encourage users to use standard OCaml compiler for this by running `opam switch 4.12; eval $(opam env)`. Running `make` recompiles `Eff` compiler and running `make generate_benchmarks` regenerates `Eff` based benchmarks.
-  
+
   *WARNING*: Docker file system is non persistent, so any changes made in container will disappear after container exists. We suggest using local repository for compiler modifications.
 
 ### Claims
@@ -88,7 +88,7 @@ Unless otherwise states, all commands are run in docker. This is also the same f
 Claims supported by artifact:
 
 - Prototype implementation of optimizing compiler as an extension of `Eff`.
-  
+
   Artifact provide straightforward way to compile `Eff` source files with experimental version of compiler and using it as a normal OCaml source (see: Compile custom `Eff` source code).
 
 Claims not/partially by artifact:
