@@ -18,7 +18,7 @@ This artifact is prepared as a docker image. The docker image contains the `Eff`
     - The repository contains the same `Dockerfile` used to build the image on dockerhub.
     - Run `docker build -t j00sko/eff-oopsla-artifact:oopsla2021 .`. Build can take up to 30 minutes depending on your internet connection and computer power. Warnings from opam that "running as root is not recommended" are expected and should be ignored.
 
-- Test successful build by running `docker run j00sko/eff-oopsla-artifact:oopsla2021 ./eff.exe examples/random.eff`. This runs a simple example and should produce:
+- Test successful build by running `docker run j00sko/eff-oopsla-artifact:oopsla2021 ./eff.exe examples/choice.eff`. This runs a simple example and should produce:
 
 ```
 [WARNING] Running as root is not recommended
