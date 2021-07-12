@@ -18,7 +18,7 @@ RUN opam install dune="2.8.0" js_of_ocaml js_of_ocaml-ppx menhir ocamlformat=0.1
 # Prepare eff
 USER root
 WORKDIR /
-RUN git clone https://github.com/jO-Osko/eff.git
+RUN git clone https://github.com/matijapretnar/eff.git
 WORKDIR /eff
 RUN git checkout 785ada7462ec8d4c4bc035698f2135ef4f6c712a
 # Build eff
