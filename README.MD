@@ -4,21 +4,21 @@
 
 ### Intro
 
-This artifact is prepared as a docker image. The docker image contains the `Eff` compiler built from source along with additional external benchmark files and working version of multicore OCaml compiler used for running benchmarks. The dockerfile was tested on MacOS (version v19.03.13-beta2 and v20.10.7), Ubuntu (20.04.2 LTS), and Windows (20.10.6, build 370c289).
+This artifact is prepared as a docker image. The docker image contains the `Eff` compiler built from source along with additional external benchmark files and working version of multicore OCaml compiler used for running benchmarks. The dockerfile was tested on MacOS (version v19.03.13-beta2 and v20.10.7), Ubuntu (20.04.2 LTS), and Windows (20.10.6, build 370c289). Make sure that the docker settings allow for at least 6GB of ram.
 
 ### Instructions
 
 - Install docker for your [operating system](https://docs.docker.com/engine/install/), any recent enough version will do. This artifact has been tested with Docker version 20.10.2, build 20.10.2-0ubuntu1~20.04.2.
 - Before any operation, make sure that `docker-deamon` or docker service is running.
 - Obtain Docker image. This can be done in two ways:
+  1. Use prebuilt image available on Dockerhub (faster, recommended):
+      - Pull image using `docker pull j00sko/eff-oopsla-artifact:oopsla2021-update`.
+  
+  2. Build image locally(slower).
+      - The repository contains the same `Dockerfile` used to build the image on dockerhub.
+      - Run `docker build -t j00sko/eff-oopsla-artifact:oopsla2021-update .`. Build can take up to 30 minutes depending on your internet connection and computer power. Warnings from opam that "running as root is not recommended" are expected and should be ignored.
 
-  - Use prebuilt image available on Dockerhub (faster, recommended):
-    - Pull image using `docker pull j00sko/eff-oopsla-artifact:oopsla2021`.
-  - Build image locally(slower).
-    - The repository contains the same `Dockerfile` used to build the image on dockerhub.
-    - Run `docker build -t j00sko/eff-oopsla-artifact:oopsla2021 .`. Build can take up to 30 minutes depending on your internet connection and computer power. Warnings from opam that "running as root is not recommended" are expected and should be ignored.
-
-- Test successful build by running `docker run j00sko/eff-oopsla-artifact:oopsla2021 ./eff.exe examples/choice.eff`. This runs a simple example and should produce:
+- Test successful build by running `docker run j00sko/eff-oopsla-artifact:oopsla2021-update ./eff.exe examples/choice.eff`. This runs a simple example and should produce:
 
 ```
 [WARNING] Running as root is not recommended
@@ -31,6 +31,8 @@ val choose_all2 : 'a => 'a list = <handler>
 - : int list list = [[10; 20]; [5; 15]]
 - : int list list = [[10; 20]; [10; 15]; [5; 20]; [5; 15]]
 ```
+
+The example runs a simple `eff` program and outputs the results.
 
 Warnings about running as root can safely be ignored.
 
@@ -50,7 +52,7 @@ Pinned version of `Eff` is practically the same as the one used for the paper wi
 
 Any commands can also be executed directly in source code repo available at [https://github.com/matijapretnar/eff/tree/explicit-effect-subtyping](https://github.com/matijapretnar/eff/tree/explicit-effect-subtyping), provided that you have OCaml with necessary libraries installed (following instructions in eff repo or Dockerfile).
 
-Execute command `docker run -it j00sko/eff-oopsla-artifact:oopsla2021 bash`, to get access to docker.
+Execute command `docker run -it j00sko/eff-oopsla-artifact:oopsla2021-update bash`, to get access to docker.
 
 Dockerfile is minimal and `nano` is the only available editor. You can install an editor of your choice `apt-get install vim`, but be aware, that any changes made to file system will be undone once you exit the container (including installing a new editor).
 
@@ -70,7 +72,7 @@ Unless otherwise stated, all commands are run in docker. This is also the same f
 - Run benchmarks and output benchmark data in human-readable format:
 `make benchmark`.
 
-  This runs the same benchmarks as presented in paper but outputs human readable `bechamel` results. The command outputs a (usually large) `diff` between existing benchmarks present in the filesystem and results of current run and inevitably ends with an error, since `diff` reports a change. The output of the full result is saved in file `misc/code-generation-benchmarks/display-results/benchmark.expected` and can be visualized using `cat misc/code-generation-benchmarks/display-results/benchmark.expected`.
+  This runs the same benchmarks as presented in paper but outputs human readable `bechamel` results. The output of the full result is saved in file `misc/code-generation-benchmarks/display-results/benchmark.expected` and can be visualized using `cat misc/code-generation-benchmarks/display-results/benchmark.expected`.
 
   Specific benchmarks can be excluded and tried on different parameters by modifying file `misc/code-generation-benchmarks/benchmark-suite/benchmark_config.ml`. Multicore OCaml specific config is available in `misc/code-generation-benchmarks/benchmark-suite/config.multicore.ml`.
 
@@ -83,7 +85,7 @@ Unless otherwise stated, all commands are run in docker. This is also the same f
 
 - Extend and change the compiler.
 
-  Full compiler source code is available and users can make their own modifications and test the compiler. We encourage users to use the standard OCaml compiler for this by running `opam switch 4.12; eval $(opam env)`. Running `make` recompiles the `Eff` compiler and running `make generate_benchmarks` regenerates the `Eff` based benchmarks.
+  Full compiler source code is available and users can make their own modifications and test the compiler. We encourage users to use the standard OCaml compiler for this by running `opam switch 4.12; eval $(opam env)`. Running `make` recompiles the `Eff` compiler and running `make generate_benchmarks` regenerates the `Eff` based benchmarks. This recompiles benchmarks to `OCaml` code and outputs a diff of newly compared version and older version. *The return code is the same as the return code of `diff`, so if any changes are made, this command deliberately exits with an error and old files are replaced with new ones.*
 
   *WARNING*: Docker file system is non persistent, so any changes made in container will disappear after container exits. We suggest using local repository for compiler modifications.
 
@@ -101,11 +103,16 @@ Claims not/partially supported by the artifact:
 
 ### Remarks
 
+This artifact provides an `eff` compiler with support for optimized compilation to `OCaml` source code.
+Benchmarks consist of `OCaml` code generated by the presented compiler (`ocamlformat` is automatically applied to the resulting code).
+Command `make generate_benchmarks` invokes the compiler and translates `eff` source code in `misc/code-generation-benchmarks/benchmark-suite/` into `OCaml` source code.
+Benchmarks presented in the paper are already generated in the artifact.
+
 Running `make test` with the multicore version of OCaml compiler fails due to missing `ocamlformat` library. See section `Extend and change the compiler` on how to switch to standard OCaml.
 
 ### Artifact links
 
-- Zenodo code release: [![DOI](https://zenodo.org/badge/157909545.svg)](https://zenodo.org/badge/latestdoi/157909545).
-- Dockerhub [Dockerfile](https://hub.docker.com/layers/157697698/j00sko/eff-oopsla-artifact/oopsla2021/images/sha256-9f049a25ba572a821d5435a62259e0b3329d628ae665d9755885966849593c76), sha: `9f049a25ba572a821d5435a62259e0b3329d628ae665d9755885966849593c76`.
-- Artifact information and instructions: [page](https://github.com/jO-Osko/EFF-OOPSLA2021/releases/tag/OOPSLA2021-INSTRUCTIONS).
-- Dockerfile on zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5092128.svg)](https://doi.org/10.5281/zenodo.5092128).
+- Zenodo code release: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5129874.svg)](https://doi.org/10.5281/zenodo.5129874).
+- Dockerhub [Dockerfile](https://hub.docker.com/layers/159630477/j00sko/eff-oopsla-artifact/oopsla2021-update/images/sha256-886ad60ac677a9879bf434a49380b5b7d9dd7359f93230fffacbbf31acf62444?context=repo), sha: `886ad60ac677a9879bf434a49380b5b7d9dd7359f93230fffacbbf31acf62444`.
+- Artifact information and instructions: [page](https://github.com/jO-Osko/EFF-OOPSLA2021/releases/tag/OOPSLA2021-INSTRUCTIONS-UPDATE).
+- Dockerfile on zenodo: [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5130319.svg)](https://doi.org/10.5281/zenodo.5130319).
